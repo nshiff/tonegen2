@@ -1,18 +1,36 @@
 
 #include <stdio.h>
 
+const int LENGTH = 2;
+
+
+
+
 int main(){
+	char waveform_square[2] = {0x00, 0xff};
+	
+	int samplesPerSecond = 8000;
+	double sampleDuration = 1.0/samplesPerSecond;
+
+
+	int freq = 220;
+	double wavelength = 1.0/freq;
 
 	while(1==1){
-
-		int i=0;
-		for(i; i<128; i+=4){
-			putchar(0);
+		double totalDuration =0.0;
+		while( totalDuration<(wavelength/2.0)){
+			putchar(waveform_square[0]);
+			totalDuration += sampleDuration;
 		}
-		for(i; i<=255; i+=4){
-			putchar(255);
+		while( totalDuration<(wavelength/1.0)){
+			putchar(waveform_square[1]);
+			totalDuration += sampleDuration;
 		}
 	}
+
+
+
+
 
 	return 0;
 
