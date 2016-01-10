@@ -1,43 +1,33 @@
 
 #include <stdio.h>
 
-const int LENGTH = 2;
+#define SAMPLES_PER_SECOND 8000;
+#define SAMPLE_DURATION 1.0/SAMPLES_PER_SECOND;
+
+char WAVEFORM_SQUARE[4] = {0x00, 0x00, 0xff, 0xff};
 
 
+void playWavelength(int frequency, int numberOfSamplesInWavelength){
+	double wavelength = 1.0/frequency;
+	double totalDuration =0.0;
+	int i=0;
+	for(i=0; i<numberOfSamplesInWavelength; i++){
+		while( totalDuration<(((i+1)*wavelength)/numberOfSamplesInWavelength)){
+			putchar(WAVEFORM_SQUARE[i]);
+			totalDuration += SAMPLE_DURATION;
+		}
+	}
+
+}
 
 
 int main(){
-	char waveform_square[4] = {0x00, 0x00, 0xff, 0xff};
-	
-	int samplesPerSecond = 8000;
-	double sampleDuration = 1.0/samplesPerSecond;
-
 
 	int freq = 220;
-	double wavelength = 1.0/freq;
 
 	while(1==1){
-		double totalDuration =0.0;
-		while( totalDuration<((1*wavelength)/4.0)){
-			putchar(waveform_square[0]);
-			totalDuration += sampleDuration;
-		}
 
-		while( totalDuration<((2*wavelength)/4.0)){
-			putchar(waveform_square[1]);
-			totalDuration += sampleDuration;
-		}
-
-		while( totalDuration<((3*wavelength)/4.0)){
-			putchar(waveform_square[2]);
-			totalDuration += sampleDuration;
-		}
-
-		while( totalDuration<((4*wavelength)/4.0)){
-			putchar(waveform_square[3]);
-			totalDuration += sampleDuration;
-		}
-
+		playWavelength(freq, 4);
 
 	}
 
